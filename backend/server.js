@@ -2,8 +2,10 @@ const express = require('express');
 const app = express();
 const {connection, port} = require('./secret');
 const bodyParser = require('body-parser');
+const morgan = require("morgan");
 
 app.use(bodyParser.json());
+app.use(morgan("dev"));
 
 connection.connect();
 
@@ -21,3 +23,12 @@ app.get(`/`, (req, res) => {
       res.status(200).send(rows);
     });
   });
+
+  app.post(`/registerUser`, (req, res) => {
+    const { userName } = req.body;
+    if (!userName) return;
+    connection.query(`INSERT INTO users (userName) VALUES (?);`, userName, err => {
+        if (err) throw err;
+        console.log(`${userName} INSERTED`);
+    });
+});
