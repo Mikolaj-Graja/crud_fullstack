@@ -24,11 +24,14 @@ app.get('/getUsers', (req, res) => {
 });
 
 app.post(`/registerUser`, (req, res) => {
-	const { userName } = req.body;
-	if (!userName) return res.send('No userName');
+	const userName = req.body.userName;
+	const password = req.body.password;
+	console.log(userName);
+	console.log(password);
+
+	if (!userName || !password) return res.send('No userName or password');
 	connection.query(
-		`INSERT INTO users (userName) VALUES (?);`,
-		userName,
+		`INSERT INTO users (userName, password) VALUES ('${userName}', '${password}');`,
 		(err) => {
 			if (err) throw err;
 			console.log(`${userName} INSERTED`);

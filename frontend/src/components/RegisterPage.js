@@ -1,20 +1,25 @@
 import React from 'react';
 import axios from 'axios';
 class RegisterPage extends React.Component {
-	state = { userName: '' };
+	state = { userName: '', password: '' };
 
 	handleChange = (e) => {
-		this.setState({ userName: e.target.value });
+		this.setState({ [e.target.name]: e.target.value });
 	};
 
 	submitUserRegistration = (e) => {
 		e.preventDefault();
 		if (!this.state.userName) alert('no userName');
+		else if (!this.state.password) alert('no password');
 		else {
+			const newUser = {
+				userName: this.state.userName,
+				password: this.state.password,
+			};
 			axios
-				.post('http://localhost:3009/registerUser', this.state)
-				.then(this.setState({ userName: '' }))
-				.then(window.location.reload());
+				.post('http://localhost:3009/registerUser', newUser)
+				.then(this.setState({ userName: '', password: '' }));
+			// .then(window.location.reload());
 		}
 	};
 
@@ -27,6 +32,13 @@ class RegisterPage extends React.Component {
 						name='userName'
 						placeholder='username'
 						value={this.state.userName}
+						onChange={this.handleChange}
+					/>
+					<input
+						type='password'
+						name='password'
+						placeholder='password'
+						value={this.state.password}
 						onChange={this.handleChange}
 					/>
 					<button type='submit'>register</button>
