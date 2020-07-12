@@ -1,7 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 class RegisterPage extends React.Component {
-	state = { userName: '', password: '' };
+	state = {
+		userName: '',
+		password: '',
+		logedUserName: '',
+	};
 
 	handleChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
@@ -18,8 +22,14 @@ class RegisterPage extends React.Component {
 			};
 			axios
 				.post('http://localhost:3009/registerUser', newUser)
-				.then(this.setState({ userName: '', password: '' }));
-			// .then(window.location.reload());
+				.then(
+					this.setState({
+						logedUserName: this.state.userName,
+						userName: '',
+						password: '',
+					})
+				)
+				.catch((err) => console.log(err));
 		}
 	};
 
