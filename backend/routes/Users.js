@@ -1,3 +1,5 @@
+const { connection } = require('../secret');
+
 const getUsers = (req, res) => {
 	connection.query('SELECT * FROM users;', (err, rows, fields) => {
 		if (err) throw err;
