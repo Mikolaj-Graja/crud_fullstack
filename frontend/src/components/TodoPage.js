@@ -45,7 +45,6 @@ class TodoPage extends React.Component {
 				.post('http://localhost:3009/addTodo', newItem)
 				.then(this.setState({ newItem: '' }))
 				.catch((err) => console.log(err));
-			// e.preventDefault();
 			this.updateList();
 		}
 	};
@@ -92,7 +91,9 @@ class TodoPage extends React.Component {
 							onChange={this.handleInputChange}
 							value={this.state.newItem}
 						/>
-						<button>{this.state.buttonFunction}</button>
+						<button className={'btn btn-primary'}>
+							{this.state.buttonFunction}
+						</button>
 					</form>
 					{this.state.todoList.map((item) => (
 						<TodoItem

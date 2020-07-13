@@ -17,6 +17,10 @@
 	color: #61dafb;
 }
 
+ul {
+	list-style: none;
+}
+
 .edit {
 	color: red;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Landing from './components/Landing';
+// import Landing from './components/Landing';
 import LoginPage from './components/LoginPage';
 import Nav from './components/Nav';
 import TodoPage from './components/TodoPage';
@@ -16,14 +16,13 @@ function App() {
 				<header className='App-header'>
 					<Nav />
 				</header>
-				<main>
+				<main className={'jumbotron'}>
 					<Switch>
-						<Route exact path='/' component={Landing} />
+						<Route exact path='/' component={TodoPage} />
 						<Route exact path='/Login' component={LoginPage} />
 						<Route exact path='/todo' component={TodoPage} />
 						<Route exact path='/register' component={RegisterPage} />
 					</Switch>
-					<p>here we go again ;)</p>
 				</main>
 			</div>
 		</Router>

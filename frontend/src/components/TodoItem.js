@@ -12,8 +12,12 @@ class TodoItem extends React.Component {
 		return (
 			<li className={this.state.isActive ? 'edit' : null}>
 				<span>{this.props.name}</span>
-				<button onClick={this.props.remove}>Usuń</button>{' '}
-				<button onClick={this.handleEdit}>Edytuj</button>
+				<button onClick={this.props.remove} className={'btn btn-secondary'}>
+					Usuń
+				</button>{' '}
+				<button onClick={this.handleEdit} className={'btn btn-secondary'}>
+					Edytuj
+				</button>
 			</li>
 		);
 	}
