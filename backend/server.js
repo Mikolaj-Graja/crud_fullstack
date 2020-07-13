@@ -27,7 +27,7 @@ app.delete('/deleteUser/:id', Users.deleteUser);
 // Todo
 app.get('/getTodoList', Todo.getTodoList);
 app.post(`/addTodo`, Todo.addTodo);
-// app.put('/modifyTodo/:id', Todo.modifyTodo);
+app.put('/modifyTodo/:id', Todo.modifyTodo);
 app.delete('/deleteTodo/:id', Todo.deleteTodo);
 
 app.listen(port, (err) => {

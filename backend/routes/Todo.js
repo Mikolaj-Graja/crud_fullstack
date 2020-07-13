@@ -18,20 +18,6 @@ const addTodo = (req, res) => {
 	});
 };
 
-// const modifyTodo = (req, res) => {
-// 	const { id } = req.params;
-// 	const newUserName = req.body.userName;
-// 	if (!newUserName) return res.send('No new userName');
-// 	connection.query(
-// 		'UPDATE users SET userName = ? WHERE id = ?',
-// 		[newUserName, id],
-// 		(err) => {
-// 			if (err) throw err;
-// 			console.log(`you changed userName to ${newUserName} in row number ${id}`);
-// 		}
-// 	);
-// };
-
 const deleteTodo = (req, res) => {
 	const { id } = req.params;
 	if (!id) return res.send('No id');
@@ -41,9 +27,22 @@ const deleteTodo = (req, res) => {
 	});
 };
 
+const modifyTodo = (req, res) => {
+	console.log(`id to ${req.params.id}, a nazwa to ${req.body.newItem} `);
+	const id = req.params.id;
+	const newItemName = req.body.newItem;
+	if (!newItemName) return res.send('Nie wprowadzono zmian');
+	connection.query(
+		`UPDATE todo SET item = '${newItemName}' WHERE id = '${id}'`,
+		(err) => {
+			if (err) throw err;
+			console.log(`zmieniłeś zadanie na ${newItemName} jego id to ${id}`);
+		}
+	);
+};
 module.exports = {
 	getTodoList,
 	addTodo,
-	// modifyTodo,
+	modifyTodo,
 	deleteTodo,
 };

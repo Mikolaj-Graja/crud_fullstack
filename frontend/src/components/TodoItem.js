@@ -5,6 +5,7 @@ const TodoItem = (props) => {
 		<li>
 			<span>{props.name}</span>
 			<button onClick={props.remove}>Usuń</button>{' '}
+			<button onClick={props.modify}>Edytuj</button>
 		</li>
 	);
 };

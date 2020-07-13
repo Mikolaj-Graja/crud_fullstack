@@ -5,6 +5,7 @@ class TodoPage extends React.Component {
 	state = {
 		todoList: [],
 		newItem: '',
+		buttonFunction: 'Dodaj',
 	};
 
 	updateList = () => {
@@ -15,28 +16,16 @@ class TodoPage extends React.Component {
 	};
 
 	handleRemove = (id) => {
-		// const index = this.state.todoList.findIndex((element) => element.id === id);
-		// const todoList = [...this.state.todoList];
-		// todoList.splice(index, 1);
-		// this.setState({ todoList });
-		console.log(id);
 		axios
 			.delete(`http://localhost:3009/deleteTodo/${id}`)
 			.then(console.log(`item ${id} deleted`))
 			.then(this.updateList())
 			.catch((err) => console.log(err));
-		this.updateList();
 	};
 	handleInputChange = (e) => {
 		this.setState({ newItem: e.target.value });
 	};
 	handleAddItem = (e) => {
-		// const todoList = this.state.todoList;
-		// const id = todoList.length;
-		// const newItem = this.state.newItem;
-		// todoList.push({ id: id, name: newItem });
-		// this.setState({ todoList });
-
 		if (!this.state.newItem) alert('Zostawiłeś puste pole');
 		else {
 			const newItem = {
@@ -47,6 +36,27 @@ class TodoPage extends React.Component {
 				.then(this.setState({ newItem: '' }))
 				.catch((err) => console.log(err));
 			// e.preventDefault();
+			this.updateList();
+		}
+	};
+
+	handleModify = (id) => {
+		if (!this.state.newItem) alert('najpierw wprowadź tekst');
+		else {
+			const newItem = {
+				newItem: this.state.newItem,
+			};
+			console.log(newItem);
+			axios
+				.put(`http://localhost:3009/modifyTodo/${id}`, newItem)
+				.then(
+					console.log(
+						`item ${id} zmodyfikowany, nowa zawatość to ${newItem.newItem}`
+					)
+				)
+				.then(this.setState({ newItem: '' }))
+				.catch((err) => console.log(err));
+
 			this.updateList();
 		}
 	};
@@ -66,7 +76,7 @@ class TodoPage extends React.Component {
 							onChange={this.handleInputChange}
 							value={this.state.newItem}
 						/>
-						<button>Dodaj</button>
+						<button>{this.state.buttonFunction}</button>
 					</form>
 					{this.state.todoList.map((item) => (
 						<TodoItem
@@ -74,6 +84,7 @@ class TodoPage extends React.Component {
 							key={item.id}
 							id={item.id}
 							remove={this.handleRemove.bind(this, item.id)}
+							modify={this.handleModify.bind(this, item.id)}
 						/>
 					))}
 				</ul>
