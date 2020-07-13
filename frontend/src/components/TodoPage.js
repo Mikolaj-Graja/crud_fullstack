@@ -28,7 +28,7 @@ class TodoPage extends React.Component {
 	};
 
 	handleSubmit = () => {
-		if (this.buttonFunction === 'Dodaj') {
+		if (this.state.buttonFunction === 'Dodaj') {
 			this.handleAddItem();
 		} else {
 			this.runModify();
@@ -49,7 +49,7 @@ class TodoPage extends React.Component {
 			this.updateList();
 		}
 	};
-	handleModify = (e, id) => {
+	handleModify = (id) => {
 		this.setState({ buttonFunction: 'Edytuj', itemId: id });
 	};
 

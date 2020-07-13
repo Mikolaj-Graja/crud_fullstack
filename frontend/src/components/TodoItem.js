@@ -4,7 +4,7 @@ class TodoItem extends React.Component {
 	state = {
 		isActive: false,
 	};
-	handleModify = () => {
+	handleEdit = () => {
 		this.setState({ isActive: !this.state.isActive });
 		this.props.modify();
 	};
@@ -13,7 +13,7 @@ class TodoItem extends React.Component {
 			<li className={this.state.isActive ? 'edit' : null}>
 				<span>{this.props.name}</span>
 				<button onClick={this.props.remove}>Usuń</button>{' '}
-				<button onClick={this.handleModify}>Edytuj</button>
+				<button onClick={this.handleEdit}>Edytuj</button>
 			</li>
 		);
 	}
