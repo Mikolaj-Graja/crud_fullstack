@@ -6,6 +6,7 @@ class TodoPage extends React.Component {
 		todoList: [],
 		newItem: '',
 		buttonFunction: 'Dodaj',
+		itemId: '',
 	};
 
 	updateList = () => {
@@ -25,7 +26,16 @@ class TodoPage extends React.Component {
 	handleInputChange = (e) => {
 		this.setState({ newItem: e.target.value });
 	};
-	handleAddItem = (e) => {
+
+	handleSubmit = () => {
+		if (this.buttonFunction === 'Dodaj') {
+			this.handleAddItem();
+		} else {
+			this.runModify();
+		}
+	};
+
+	handleAddItem = () => {
 		if (!this.state.newItem) alert('Zostawiłeś puste pole');
 		else {
 			const newItem = {
@@ -39,13 +49,17 @@ class TodoPage extends React.Component {
 			this.updateList();
 		}
 	};
+	handleModify = (e, id) => {
+		this.setState({ buttonFunction: 'Edytuj', itemId: id });
+	};
 
-	handleModify = (id) => {
+	runModify = () => {
 		if (!this.state.newItem) alert('najpierw wprowadź tekst');
 		else {
 			const newItem = {
 				newItem: this.state.newItem,
 			};
+			const id = this.state.itemId;
 			console.log(newItem);
 			axios
 				.put(`http://localhost:3009/modifyTodo/${id}`, newItem)
@@ -54,7 +68,9 @@ class TodoPage extends React.Component {
 						`item ${id} zmodyfikowany, nowa zawatość to ${newItem.newItem}`
 					)
 				)
-				.then(this.setState({ newItem: '' }))
+				.then(
+					this.setState({ newItem: '', buttonFunction: 'Dodaj', itemId: '' })
+				)
 				.catch((err) => console.log(err));
 
 			this.updateList();
@@ -70,7 +86,7 @@ class TodoPage extends React.Component {
 			<>
 				<h1>Lista</h1>
 				<ul>
-					<form onSubmit={this.handleAddItem}>
+					<form onSubmit={this.handleSubmit}>
 						<input
 							type='text'
 							onChange={this.handleInputChange}
